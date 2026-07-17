@@ -1,82 +1,33 @@
 # User CRUD API
 
-A simple REST API built with **Node.js** and **Express** that performs CRUD
-(Create, Read, Update, Delete) operations on a `users` resource.
+Simple backend API made for Task-01 of my internship. It handles basic CRUD (Create, Read, Update, Delete) operations for a users resource, built with Node.js and Express.
 
-- Storage: in-memory JavaScript object (acts as a hashmap) — no database needed.
-- Each user has: `id` (UUID), `name`, `email`, `age`.
-- Proper HTTP status codes: `200`, `201`, `204`, `400`, `404`.
-- Basic input validation (email format, required fields, age must be a positive number).
+Users are stored in memory (no database), each with an id, name, email and age.
 
-## 1. Requirements
+## How to run it
 
-- [Node.js](https://nodejs.org/) installed (any recent version, 18+ is fine).
-  Check with: `node -v`
+1. Install dependencies:
+   npm install
 
-## 2. Setup
+2. Start the server:
+   npm start
 
-```bash
-npm install
-```
+3. Server runs at http://localhost:3000
 
-## 3. Run the server
+## Endpoints
 
-```bash
-npm start
-```
+POST /users - create a new user
+GET /users - get all users
+GET /users/:id - get one user
+PUT /users/:id - update a user
+DELETE /users/:id - delete a user
 
-You should see:
-```
-User CRUD API running at http://localhost:3000
-```
+## Example
 
-## 4. Endpoints
+curl -X POST http://localhost:3000/users -H "Content-Type: application/json" -d '{"name": "John", "email": "john@example.com", "age": 25}'
 
-| Method | Endpoint      | Description          |
-|--------|---------------|-----------------------|
-| POST   | /users        | Create a new user     |
-| GET    | /users        | Get all users         |
-| GET    | /users/:id    | Get a single user     |
-| PUT    | /users/:id    | Update a user         |
-| DELETE | /users/:id    | Delete a user         |
+## Notes
 
-## 5. Example requests (using curl)
-
-**Create a user**
-```bash
-curl -X POST http://localhost:3000/users \
-  -H "Content-Type: application/json" \
-  -d '{"name": "John Doe", "email": "john@example.com", "age": 25}'
-```
-
-**Get all users**
-```bash
-curl http://localhost:3000/users
-```
-
-**Get one user** (replace `<id>` with an id from the create response)
-```bash
-curl http://localhost:3000/users/<id>
-```
-
-**Update a user**
-```bash
-curl -X PUT http://localhost:3000/users/<id> \
-  -H "Content-Type: application/json" \
-  -d '{"age": 26}'
-```
-
-**Delete a user**
-```bash
-curl -X DELETE http://localhost:3000/users/<id>
-```
-
-You can also test all of this visually using [Postman](https://www.postman.com/downloads/)
-instead of curl — just set the method, URL, and for POST/PUT add a JSON body.
-
-## 6. Notes
-
-- Data is stored in memory, so it resets whenever the server restarts. This
-  is intentional per the task requirements (no database needed).
-- Validation checks: `name` must be a non-empty string, `email` must look
-  like a valid email address, `age` must be a positive whole number.
+- Data resets every time the server restarts since it's stored in memory.
+- Basic validation is included - name and email are required, email must be valid, age must be a positive number.
+- Proper status codes are returned - 201 for created, 404 for not found, 400 for bad input.
